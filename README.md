@@ -76,27 +76,27 @@ BurgerFactory interface.
 ```kotlin
 
 interface BurgerFactory{
-    fun createBun(): Bun
-    fun createPatty(): Patty
+    fun getBun(): Bun
+    fun getPatty(): Patty
 }
 
 class KfcStyleBurgerFactory: BurgerFactory{
-    override fun createBun(): Bun{
+    override fun geteBun(): Bun{
         return KfcStyleBun()
     }
     
-    override fun createPatty(): Patty {
+    override fun getPatty(): Patty {
         return kfcStylePatty()
     }
 }
 
 
 class BfcStyleBurgerFactory: BurgerFactory {
-    override fun createBun(): Bun{
+    override fun getBun(): Bun{
         return BfcStyleBun()
     }
     
-    override fun createPatty(): Patty {
+    override fun getPatty(): Patty {
         return BfcStylePatty()
     }
 }
@@ -107,8 +107,8 @@ Now, we can create a helper factory that will give us the burger of our choice.
 
 ```kotlin
 class MakeMyBurger(burgerFactory: BurgerFactory){
-    val burgerBun: Bun = burgerFactory.createBun()
-    val burgerPatty: Patty = burgerFactory.createPatty()
+    val burgerBun: Bun = burgerFactory.getBun()
+    val burgerPatty: Patty = burgerFactory.getPatty()
     
     // this function will create our burger
     fun create() {
