@@ -128,6 +128,10 @@ So now we can create an object of MakeMyBurger and pass the Burger we want to cr
 ```
 
 
+```
+By this way we are ensuring that, if we want KFC style Burger then patty and bun will be from KFC only. No chance for mixing.
+```
+
 
 
 

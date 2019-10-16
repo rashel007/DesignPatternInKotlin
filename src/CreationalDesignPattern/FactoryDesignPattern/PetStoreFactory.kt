@@ -11,6 +11,7 @@ class PetStoreFactory: AnimalFactory {
 //            return null
 //        }
 
+
         return when(type){
             AnimalType.DOG ->  Dog()
             AnimalType.CAT ->  Cat()
