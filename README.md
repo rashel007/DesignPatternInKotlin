@@ -139,10 +139,89 @@ By this way we are ensuring that, if we want KFC style Burger then patty and bun
 access to this instance
 
 
+#### 4. Prototype Design Pattern
+
+> Its a creational design pattern that lets us produce new objects by coping existing ones, without compromising their internals.
 
 
+So, why do we need this prototype design pattern. The answer is, the creation of that object might be a heavy task, 
+like getting from db transaction for fetching from network. Manually coping an object is difficult. We have to go through 
+the fields of that object ,and also there might be private fields which we dont have access. So, Here we can use Prototype
+design pattern to easily solve this problem.   
+
+For using prototype design pattern we have to follow these steps : 
+
+1. Create an interface named Prototype which expose a close method
+2. Design a PrototypeRegistry which acts as a cache to hold the prototypical objects
+3. Design a factory method which accepts the arguments and finds the correct prototype object from the registry and returns a copy for it.
+4. Use this clone() method to create a copy of a Prototype whenever it is required.
 
 
+Lets implement these steps : 
+
+1. creating an interface
+
+```kotlin
+    interface Prototype {
+        fun clone(): Prototype
+    }
+```
+
+2. PrototypeRegistry
+```kotlin
+class PrototypeRegistry {
+
+    private var prototypeRegistry: HashMap<String, Prototype>
+
+    init {
+        println("PrototypeRegistry init called")
+        prototypeRegistry = HashMap()
+    }
+
+    fun addPropertyToRegistry(prototypeName: String,prototype: Prototype ){
+        prototypeRegistry.put(prototypeName, prototype)
+    }
+
+    fun getPtototypeFromProtypeRegistry(prototypeName: String): Prototype{
+
+        return prototypeRegistry.get(prototypeName)!!.clone()
+    }
+}
+```
+
+For 3 and 4 we can create a factory class that will take the prototypeName and return a clone object of that type
+
+
+```kotlin
+class ConcretePrototype : Prototype {
+
+
+     var name: String
+
+    constructor(name: String) {
+        this.name = name
+    }
+
+    constructor(prototype: ConcretePrototype) {
+        this.name = prototype.name
+    }
+
+
+    override fun clone(): Prototype {
+        return ConcretePrototype(this)
+    }
+}
+
+  val original = ConcretePrototype("Rashel")
+
+  // first we have to cache our original object in memory
+  val registry = PrototypeRegistry();
+  registry.addPropertyToRegistry("original", original)
+
+  val copyItem: ConcretePrototype = registry.getPtototypeFromProtypeRegistry("original") as ConcretePrototype
+
+
+```
 ## References
 
 1. [Creational Design Pattern](https://www.youtube.com/playlist?list=PLn05u4nMKcB-1BSfb3L-09hkcSgNZHrv7)
