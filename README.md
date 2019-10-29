@@ -222,6 +222,47 @@ class ConcretePrototype : Prototype {
 
 
 ```
+
+
+#### 5. Builder Design pattern
+
+Builder design pattern is a creational design pattern. It is very useful when : 
+
+1. A class has too many variables and many of them have some data type, creating confusion for Client program
+2. Some of the Class variables are Optional, so Client will have to pass NULL if Factory pattern is used.
+3. Class instance creation is heavy and complex, so all those complexity will become part of factory
+
+By this way we can easily maintain and extend our class.Lets create an example
+
+```kotlin
+
+class Computer private constructor(val ram: String? , var processor: String? , var ssd: String?) {
+
+data class Builder(
+    private var ram: String? = null
+    private var processor: String? = null
+    private var ssd: String? = null
+) {
+
+    fun setRam(ram: String)  = apply {this.ram = ram}
+    fun setProcessor(processor: String) = apply {this.processor = processor}
+    fun setSSD(ssd: String) = apply {this.ssd = ssd}
+    fun build() = Computer(ram, processor, ssd)
+    
+}
+}
+fun main() {
+    var myComputer = Computer.Builder()
+                .setRam("RAM")
+                .setProcessor("PROCESSOR")
+                .setSSD("SSD")
+                .build();
+                
+                // this will build our computer
+}
+
+```
+
 ## References
 
 1. [Creational Design Pattern](https://www.youtube.com/playlist?list=PLn05u4nMKcB-1BSfb3L-09hkcSgNZHrv7)
