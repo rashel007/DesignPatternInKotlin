@@ -266,6 +266,10 @@ fun main() {
 
 
 ## Structural Design Pattern
+
+Structural design pattern are concerned with how classes and objects can be composed. 
+The structural design patterns simplifies the structure by identifying the relationships.
+
     1. Adapter Pattern
     2. Bridge Pattern
     3. Composite Pattern
@@ -274,7 +278,12 @@ fun main() {
     6. Flyweight Pattern
     7. Proxy Pattern
     
+#### 1. Adapter design pattern
 
+Adapter design pattern creates a bridge between two incompatible interfaces.
+    
+Ex: CardReader , which acts as an adapter between memory card and laptop/computer. So here, memory card and laptop are tow 
+incompatible device. and CardReader acts as a bridge between these tow device. 
 
 ## References
 
