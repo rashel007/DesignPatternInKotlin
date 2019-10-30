@@ -22,4 +22,23 @@ fun main() {
 
     println("${obj1.id}") // will print 20
 
+    // another approch
+
+    val faekDatabase = FakeDataBase.getInstance()
+
+}
+
+
+// another approch
+
+class FakeDataBase private constructor() {
+
+    companion object{
+        @Volatile private var instance: FakeDataBase? = null
+
+        fun getInstance() =
+                instance ?: synchronized(this){
+                    instance ?: FakeDataBase().also{ instance = it}
+                }
+    }
 }
