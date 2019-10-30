@@ -263,6 +263,19 @@ fun main() {
 
 ```
 
+
+
+## Structural Design Pattern
+    1. Adapter Pattern
+    2. Bridge Pattern
+    3. Composite Pattern
+    4. Decorator Pattern
+    5. Facade Pattern
+    6. Flyweight Pattern
+    7. Proxy Pattern
+    
+
+
 ## References
 
 1. [Creational Design Pattern](https://www.youtube.com/playlist?list=PLn05u4nMKcB-1BSfb3L-09hkcSgNZHrv7)
