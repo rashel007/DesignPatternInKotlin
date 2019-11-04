@@ -285,6 +285,151 @@ Adapter design pattern creates a bridge between two incompatible interfaces.
 Ex: CardReader , which acts as an adapter between memory card and laptop/computer. So here, memory card and laptop are tow 
 incompatible device. and CardReader acts as a bridge between these tow device. 
 
+```kotlin
+
+// lets create an audio player app. which have a functionality play music.
+
+interface MediaPlayer {
+    fun play(audioType: String, fileName: String)
+}
+
+
+
+interface AdvancedMediaPlayer {
+
+    fun playVlc(fileName: String)
+
+    fun playMp4(fileName: String)
+
+}
+
+// create 2 advanced media player Mp4 and VlC. Which extends the AdvancedMediaPlayer interface
+
+class Mp4Player : AdvancedMediaPlayer {
+    override fun playVlc(fileName: String) {
+    }
+
+    override fun playMp4(fileName: String) {
+        println("mp4 playing $fileName song")
+    }
+}
+
+class VlcPlayer : AdvancedMediaPlayer {
+    override fun playVlc(fileName: String) {
+        println("Vlc playing $fileName song")
+    }
+
+    override fun playMp4(fileName: String) {
+    }
+}
+
+// lets create the mediaplayer adapter. this adapter will extends MediaPlayer and also take an arguments AdvancedMediaPlayer
+
+class MediaAdapter : MediaPlayer {
+
+    lateinit var advancedMediaPlayer: AdvancedMediaPlayer
+
+    constructor(audioType: String) {
+        if (audioType.equals("vlc")) {
+            advancedMediaPlayer = VlcPlayer()
+        } else if (audioType.equals("mp4")) {
+            advancedMediaPlayer = Mp4Player()
+        }
+    }
+
+    override fun play(audioType: String, fileName: String) {
+        if (audioType.equals("vlc")) {
+            advancedMediaPlayer.playVlc(fileName)
+        } else if (audioType.equals("mp4")) {
+            advancedMediaPlayer.playMp4(fileName)
+        }
+    }
+}
+
+// lets create our audio player . this player can only run mp3 player. but if the type is mp4 or vlc then it can alos convert and play these format
+
+class AudioPlayer : MediaPlayer {
+
+    lateinit var mediaPlayer: MediaPlayer
+
+    override fun play(audioType: String, fileName: String) {
+
+        if (audioType.equals("mp3")) {
+            println("Playing mp3 song $fileName")
+        } else if (audioType.equals("vlc") || audioType.equals("mp4")) {
+            mediaPlayer = MediaAdapter(audioType)
+            mediaPlayer.play(audioType, fileName)
+        } else {
+            println("Invalid audioType. $audioType not supported")
+        }
+
+    }
+}
+
+```
+
+
+#### Bridge Design Pattern
+A Bridge Pattern says that just "decouple the functional abstraction from the implementation so that the two can vary independently".
+
+
+```kotlin
+/**
+ * Bridge implementer interface
+ */
+interface DrawAPI {
+
+    fun drawCircle(radius: Int, x: Int, y: Int)
+
+}
+
+/**
+ * Concrete bridge implementer class implementing the
+ * DrawAPI interface
+ */
+class RedCircle: DrawAPI {
+
+    override fun drawCircle(radius: Int, x: Int, y: Int) {
+        println("Drawing Red Circle")
+    }
+}
+
+/**
+ * Concrete bridge implementer class implementing the
+ * DrawAPI interface
+ */
+class GreenCircle : DrawAPI{
+    override fun drawCircle(radius: Int, x: Int, y: Int) {
+        println("Drawing Green Circle")
+    }
+}
+
+
+abstract class Shape(protected var drawAPI: DrawAPI) {
+
+    abstract fun draw()
+}
+
+
+class Circle(private var x: Int,private var y: Int,private var radius: Int, drawAPI: DrawAPI) :  Shape(drawAPI) {
+
+    override fun draw() {
+        drawAPI.drawCircle(radius, x, y)
+    }
+}
+
+
+fun main() {
+    val redCircle = Circle(10, 10, 100, RedCircle())
+    redCircle.draw()
+
+    val greenCircle = Circle(20, 20, 200, GreenCircle())
+    greenCircle.draw()
+}
+
+```
+
+
 ## References
 
 1. [Creational Design Pattern](https://www.youtube.com/playlist?list=PLn05u4nMKcB-1BSfb3L-09hkcSgNZHrv7)
