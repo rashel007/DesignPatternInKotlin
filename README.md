@@ -429,9 +429,157 @@ fun main() {
 
 ```
 
+#### Composite Design Pattern
 
+As described by Gof, "Compose objects into tree structure to represent part-whole hierarchies. Composite lets
+client treat individual objects and compositions of objects uniformly[in a way that is the same in all cases and at all times]"
+It allows you to have a tree structure and ask eash node in the tree structure to perform a task.
+
+##### The Composite pattern has four participants:
+1. Component - declares the interface for objects in the composition and for accessing and managing its child components.
+It also implements default behavior for the interface common to all classes as appropriate.
+
+2. Leaf - defines behavior for primitive objects in the composition. It represents lead objects in the composition.
+
+3. Composite - Stores child components and implements child related operations in the component interface.
+
+4. Client - Manipulates the objects in the composition through the component interface.
+
+
+
+```kotlin
+
+// 1 Interface Component
+
+interface Employee{
+    fun showEmployeeDetails()    
+}
+
+
+// 2 Leaf
+
+class Developer: Employee {
+
+    private var name: String? = null
+    private var empId: Long? = null
+    private var position: String? = null
+    
+    constructor(name: String, empId: Long, position: String) {
+        this.name = name
+        this.empId = empId
+        this.position = position        
+    }
+    
+    override fun showEmployeeDetails(){
+        println("$name")
+    }
+    
+}
+
+class Manager: Employee {
+
+    private var name: String? = null
+    private var empId: Long? = null
+    private var position: String? = null
+    
+    constructor(name: String, empId: Long, position: String) {
+        this.name = name
+        this.empId = empId
+        this.position = position        
+    }
+    
+    override fun showEmployeeDetails(){
+        println("$name")
+    }
+    
+}
+
+// 3. Composite
+
+class CompanyDirectory : Employee {
+
+    private var employeeList = ArrayList<Employee>()
+
+    override fun showEmployeeDetails() {
+        for (emp in employeeList){
+            emp.showEmployeeDetails()
+        }
+    }
+
+    fun addEmployee(emp: Employee){
+        employeeList.add(emp)
+    }
+
+    fun remveEmployee(emp: Employee){
+        employeeList.remove(emp)
+    }
+
+}
+
+// 4 Client
+
+fun main() {
+    var dev1 = Developer("Name 1", 100, "Pro Developer")
+    var dev2 = Developer(empId = 101, position = "Jr Developer", name = "Name 2")
+
+    var softDirectory = CompanyDirectory()
+
+    softDirectory.addEmployee(dev1)
+    softDirectory.addEmployee(dev2)
+
+
+    var manager1 = Manager("Name 11", 200, "Business Manager")
+    var manager2 = Manager(empId = 201, position = "Accounting Manager", name = "Name 22")
+
+    var managerDirectory = CompanyDirectory()
+
+    managerDirectory.addEmployee(manager1)
+    managerDirectory.addEmployee(manager2)
+
+    var directory = CompanyDirectory()
+    directory.addEmployee(softDirectory)
+    directory.addEmployee(managerDirectory)
+
+
+    directory.showEmployeeDetails()
+}
+
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 ## References
 
 1. [Creational Design Pattern](https://www.youtube.com/playlist?list=PLn05u4nMKcB-1BSfb3L-09hkcSgNZHrv7)
 2. [RefactoringGuru](https://refactoring.guru/design-patterns)
 3. [Design Pattern-kudvenkat](https://www.youtube.com/watch?v=YGGg9ecy0K4&list=PL6n9fhu94yhUbctIoxoVTrklN3LMwTCmd&index=2)
+4. [Coding Simplified](https://www.youtube.com/watch?v=VGLjQuEQgkI&list=PLt4nG7RVVk1h9lxOYSOGI9pcP3I5oblbx)
+
+
+
+
