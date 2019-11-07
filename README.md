@@ -433,7 +433,10 @@ fun main() {
 
 As described by Gof, "Compose objects into tree structure to represent part-whole hierarchies. Composite lets
 client treat individual objects and compositions of objects uniformly[in a way that is the same in all cases and at all times]"
-It allows you to have a tree structure and ask eash node in the tree structure to perform a task.
+It allows you to have a tree structure and ask each node in the tree structure to perform a task.
+
+
+[Describe part-hole hierarchy](https://javapapers.com/design-patterns/composite-design-pattern/)
 
 ##### The Composite pattern has four participants:
 1. Component - declares the interface for objects in the composition and for accessing and managing its child components.
@@ -545,14 +548,13 @@ fun main() {
 }
 
 
-
-
-
-
-
 ```
 
+#### Decorator Design Pattern
 
+Decorator pattern allows a user to add new functionality to an existing object without altering its structure. This type of design pattern comes under structural pattern as this pattern acts as a wrapper to existing class.
+
+This pattern creates a decorator class which wraps the original class and provides additional functionality keeping class methods signature intact.
 
 
 

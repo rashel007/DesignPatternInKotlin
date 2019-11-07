@@ -1,12 +1,11 @@
 package StructuralDesignPattern.DecoratorDesignPattern
 
-class FreshTomato(_pizza: Pizza) : ToppingsDecorator() {
+class FreshTomato(_pizza: Pizza) : Pizza by _pizza {
 
     val pizza: Pizza = _pizza
 
-    override fun getDescriptionToppings(): String {
-
-        return "${pizza.description} , FreshTomato"
+    init {
+        description = pizza.description + ", Fresh Tomato"
     }
 
     override fun getCost(): Int {
